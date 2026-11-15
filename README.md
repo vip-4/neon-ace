@@ -223,6 +223,28 @@ The bot is configured through the Bot API: `setChatMenuButton` with a `MenuButto
 
 Open `@VIP865bot` in Telegram and tap the **Play Neon Ace** menu button.
 
+### Firebase Hosting
+
+`firebase.json` configures Firebase Hosting to serve `dist/` with the same strict security headers, immutable asset caching, clean URLs and automatic `404.html` handling as the other hosts. `dist/` is generated, not committed, so build before deploying:
+
+```powershell
+powershell -NoProfile -ExecutionPolicy Bypass -File scripts/build.ps1 -SiteUrl https://YOUR-PROJECT.web.app
+```
+
+Then deploy:
+
+```powershell
+firebase deploy --only hosting --project YOUR-PROJECT-ID
+```
+
+Prerequisites that must be completed by a human (they cannot be automated from this environment):
+
+1. **Google authentication** — `gcloud auth application-default login --scopes=https://www.googleapis.com/auth/webmasters,https://www.googleapis.com/auth/cloud-platform` is an interactive browser OAuth flow. The Google Cloud SDK is installed at `%LOCALAPPDATA%\GoogleCloudSDK\google-cloud-sdk`. Alternatively set `GOOGLE_APPLICATION_CREDENTIALS` to a service-account key.
+2. **A GCP project with Firebase enabled** — create/select a project, enable Firebase Hosting and obtain its `PROJECT_ID`. Project creation requires a billing account and a `gcloud auth login` (ADC credentials alone are not a gcloud CLI account).
+3. **firebase-tools** — the Firebase CLI requires Node.js/npm, which is not installed here (`npm i -g firebase-tools` after installing Node).
+
+The `webmasters` scope is intended for Google Search Console API calls (sitemap submission / ownership verification); it does not grant hosting deploy rights on its own.
+
 ### Source mirrors
 
 The full source — `site/`, `scripts/`, hosting configs and the CI workflow — is mirrored to three public repositories:
