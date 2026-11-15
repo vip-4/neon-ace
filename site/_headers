@@ -27,6 +27,12 @@
 /sicbo.html
   Cache-Control: public, max-age=0, must-revalidate
 
+/roulette
+  Cache-Control: public, max-age=0, must-revalidate
+
+/roulette.html
+  Cache-Control: public, max-age=0, must-revalidate
+
 /slots
   Cache-Control: public, max-age=0, must-revalidate
 

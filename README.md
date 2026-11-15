@@ -53,6 +53,17 @@ The page ships complete SEO/GEO (title/description/keywords/OG/Twitter/canonical
 
 The page ships complete SEO/GEO (title/description/keywords/OG/Twitter/canonical/robots/sitemap), semantic/indexable rules, payout table and FAQ, plus JSON-LD (WebSite/WebPage/VideoGame/HowTo/FAQPage/BreadcrumbList), and is linked from site navigation, `sitemap.xml` and `llms.txt`.
 
+## European Roulette (輪盤) demo
+
+`site/roulette.html` is a lightweight, indexable **browser European roulette** page with virtual chips and a Canvas-rendered single-zero wheel (`assets/roulette.js`, `assets/roulette-demo.css`):
+
+- **Bets/payouts (demo)** — Straight-up 0–36 (35:1), Red/Black (1:1), Odd/Even (1:1), Low 1–18 / High 19–36 (1:1), Dozens (2:1), Columns (2:1). Advanced split/corner/line bets omitted to keep the layout lightweight.
+- **Rendering & loop** — native HTML5 Canvas 2D wheel/ball animation, DPR-aware resize (`devicePixelRatio` capped), fixed-timestep `requestAnimationFrame` loop with clamped `deltaTime` and `visibilitychange` reset.
+- **State & UX** — finite-state flow (betting → spinning → reveal/settle), virtual bankroll/stats/sound in `localStorage`, semantic bet grid with touch-sized controls, `aria-live` status, visible focus and `prefers-reduced-motion` support.
+- **Security boundary** — local Web Crypto RNG for entertainment only; real-money/ranked/redeemable products must use server-authoritative RNG, payouts and signed results.
+
+The page ships complete SEO/GEO (title/description/keywords/OG/Twitter/canonical/robots/sitemap), semantic/indexable bet layout, rules/payout table and FAQ, plus JSON-LD (WebSite/WebPage/VideoGame/HowTo/FAQPage/BreadcrumbList), and is linked from site navigation, `sitemap.xml` and `llms.txt`.
+
 ## Project structure
 
 ```
@@ -62,16 +73,19 @@ The page ships complete SEO/GEO (title/description/keywords/OG/Twitter/canonical
 │   ├── slots.html              # Canvas slot reel demo + SEO/GEO technical article
 │   ├── baccarat.html           # Baccarat (Punto Banco) demo + SEO/GEO rules/FAQ
 │   ├── sicbo.html              # Sic Bo dice demo + SEO/GEO rules/FAQ
+│   ├── roulette.html           # European roulette demo + SEO/GEO rules/FAQ
 │   ├── 404.html
 │   ├── assets/
 │   │   ├── app.js              # game engine and render layer
 │   │   ├── slot-machine.js     # Canvas slot reels, Big Win FX, DPR/deltaTime
 │   │   ├── baccarat.js         # Baccarat FSM, third-card rules, Canvas render
 │   │   ├── sicbo.js            # Sic Bo FSM, dice RNG, Canvas render
+│   │   ├── roulette.js         # Roulette FSM, wheel render, bet settlement
 │   │   ├── styles.css          # design system and responsive layout
 │   │   ├── slot-demo.css       # standalone demo page styles
 │   │   ├── baccarat-demo.css   # baccarat demo page styles
 │   │   ├── sicbo-demo.css      # sic bo demo page styles
+│   │   ├── roulette-demo.css   # roulette demo page styles
 │   │   ├── favicon.svg
 │   │   ├── og-cover.png
 │   │   ├── icon-192.png

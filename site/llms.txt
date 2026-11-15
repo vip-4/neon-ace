@@ -37,6 +37,7 @@ Contact: no accounts or support inbox; this is a self-contained static game.
 - [Canvas slot reel demo](__SITE_URL__/slots): a separate, runnable 3x5 HTML5 Canvas prototype with back-out easing stops, Big Win coin particles, and a DPR / deltaTime fix.
 - [Baccarat (Punto Banco)](__SITE_URL__/baccarat): a free browser baccarat demo with virtual chips, 8-deck shoe, Player/Banker/Tie bets, standard third-card tableau and indexable rules/FAQ.
 - [Sic Bo (骰寶)](__SITE_URL__/sicbo): a free browser Sic Bo dice demo with virtual chips, three-dice Canvas rolls and common bets (Big/Small, Odd/Even, Any/Specific Triple) plus indexable rules/FAQ.
+- [European Roulette (輪盤)](__SITE_URL__/roulette): a free browser European (single-zero) roulette demo with virtual chips, animated Canvas wheel and common inside/outside bets plus indexable rules/FAQ.
 
 ## Canvas slot reel demo (quick facts for summaries)
 
@@ -68,6 +69,15 @@ Contact: no accounts or support inbox; this is a self-contained static game.
 - Implementation: native HTML5 Canvas 2D + vanilla ES6+, DPR-aware rendering, fixed-timestep loop with deltaTime clamp/reset on visibilitychange, Web Crypto dice RNG for local demo.
 - Security boundary: presentation/entertainment only — real-money, ranked or redeemable products must use server-authoritative RNG, payout calculation and signed/verified results.
 - Accessibility & storage: semantic indexable rules/FAQ/JSON-LD, 44px touch targets, aria-live status, visible focus, prefers-reduced-motion; bankroll/stats/sound stored locally in localStorage only.
+
+## European Roulette (輪盤) demo (quick facts for summaries)
+
+- URL: __SITE_URL__/roulette · free, virtual-chip browser European roulette demo (no sign-up, no download, no real money).
+- Wheel: single-zero European layout (0–36, 37 pockets), animated Canvas spin with deceleration.
+- Bets/payouts in this demo: Straight-up 35:1, Red/Black 1:1, Odd/Even 1:1, Low 1–18/High 19–36 1:1, Dozens 2:1, Columns 2:1 (split/corner/line bets not included in this lightweight demo).
+- Implementation: native HTML5 Canvas 2D + vanilla ES6+, DPR-aware rendering, fixed-timestep loop with deltaTime clamp/reset on visibilitychange, Web Crypto RNG for local demo.
+- Security boundary: presentation/entertainment only — real-money, ranked or redeemable products must use server-authoritative RNG, payout calculation and signed/verified results.
+- Accessibility & storage: semantic/indexable bet layout rules/FAQ/JSON-LD, touch-sized controls, aria-live status, visible focus, prefers-reduced-motion; bankroll/stats/sound stored locally in localStorage only.
 
 ## FAQ
 

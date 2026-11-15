@@ -220,12 +220,13 @@ Write-Utf8Text (Join-Path $distRoot '.nojekyll') ''
 # Validate output ----------------------------------------------------------
 
 $requiredFiles = @(
-    'index.html', 'slots.html', 'baccarat.html', 'sicbo.html', '404.html', 'robots.txt', 'sitemap.xml', 'llms.txt',
+    'index.html', 'slots.html', 'baccarat.html', 'sicbo.html', 'roulette.html', '404.html', 'robots.txt', 'sitemap.xml', 'llms.txt',
     'manifest.webmanifest', '_headers', '.nojekyll',
     'assets/styles.css', 'assets/app.js', 'assets/favicon.svg',
     'assets/slot-machine.js', 'assets/slot-demo.css',
     'assets/baccarat.js', 'assets/baccarat-demo.css',
     'assets/sicbo.js', 'assets/sicbo-demo.css',
+    'assets/roulette.js', 'assets/roulette-demo.css',
     'assets/og-cover.png', 'assets/icon-512.png', 'assets/icon-192.png',
     'assets/apple-touch-icon.png'
 )
@@ -325,6 +326,10 @@ if (Test-Path -LiteralPath $baccaratPath -PathType Leaf) {
 $sicboPath = Join-Path $distRoot 'sicbo.html'
 if (Test-Path -LiteralPath $sicboPath -PathType Leaf) {
     Test-DocumentLinks $sicboPath (Read-Utf8Text $sicboPath)
+}
+$roulettePath = Join-Path $distRoot 'roulette.html'
+if (Test-Path -LiteralPath $roulettePath -PathType Leaf) {
+    Test-DocumentLinks $roulettePath (Read-Utf8Text $roulettePath)
 }
 $errorPath = Join-Path $distRoot '404.html'
 if (Test-Path -LiteralPath $errorPath -PathType Leaf) {
