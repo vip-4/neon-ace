@@ -2,7 +2,7 @@
 
 A production-ready, single-page blackjack game built with plain HTML, CSS and JavaScript. No frameworks, no build tooling, no remote fonts, no analytics and no real-money wagering. The critical path is roughly **29 KB gzipped**.
 
-**Live production site:** <https://neon-ace.pages.dev/> — deployed on Cloudflare Pages (Direct Upload).
+**Live production sites:** <https://neon-ace.pages.dev/> (Cloudflare Pages) and <https://vip-4.github.io/neon-ace/> (GitHub Pages).
 
 ---
 
@@ -174,12 +174,21 @@ The live site is the Direct Upload project `neon-ace` at <https://neon-ace.pages
 
 ### GitHub Pages
 
-1. Push the repository to GitHub.
-2. Add a repository variable named `SITE_URL` with the production origin, for example `https://example.com` (no trailing slash).
-3. Enable **Settings > Pages > Source: GitHub Actions**.
-4. Run the **Deploy Neon Ace to GitHub Pages** workflow. It builds with `pwsh`, validates, uploads `dist/` and deploys.
+The live site is the public repository `vip-4/neon-ace`, deployed by the **Deploy Neon Ace to GitHub Pages** workflow at <https://vip-4.github.io/neon-ace/>.
 
-> **Project pages:** `404.html` uses root-absolute asset paths so it works on a custom domain. A GitHub project site served from `https://user.github.io/repo/` needs a custom domain, or the paths in `site/404.html` must be changed to `/repo/assets/...` before building.
+| Setting | Value |
+| --- | --- |
+| Repository | `vip-4/neon-ace` |
+| Production URL | <https://vip-4.github.io/neon-ace/> |
+| Pages build type | GitHub Actions |
+| Workflow | `.github/workflows/pages.yml` |
+| Repository variables | `SITE_URL=https://vip-4.github.io/neon-ace`, `BASE_PATH=/neon-ace` |
+
+1. Push to `main`; the workflow builds with `pwsh`, validates, uploads `dist/` as a Pages artifact and deploys.
+2. Set `SITE_URL` to the production origin without a trailing slash and `BASE_PATH` to the repository path. Use an empty `BASE_PATH` for a user/organization site served from the domain root.
+3. `BASE_PATH` is injected into `<base href="...">` in `404.html`, so custom 404 pages served under a project sub-path still resolve assets correctly.
+
+> **Project-site limits:** `robots.txt`, `sitemap.xml` and `llms.txt` live at `/neon-ace/` rather than the host root; the root-level files belong to the existing `vip-4.github.io` user site. GitHub Pages cannot send custom response headers, so `_headers` is served as a plain file there instead of being applied. Use Cloudflare Pages, Netlify, Vercel or a proxied custom domain when you need the strict CSP and security headers.
 
 ### Any static host
 
@@ -200,7 +209,7 @@ After deploying, verify with:
 - Google Rich Results Test
 - Schema Markup Validator
 - Facebook Sharing Debugger and X Card Validator
-- `https://neon-ace.pages.dev/robots.txt`, `/sitemap.xml` and `/llms.txt` (or the equivalents on your own domain)
+- `https://neon-ace.pages.dev/robots.txt` and `https://vip-4.github.io/neon-ace/robots.txt`, plus `/sitemap.xml` and `/llms.txt` on each (or the equivalents on your own domain)
 - Lighthouse SEO, Accessibility and Best Practices
 
 ## Headers and privacy
@@ -210,6 +219,7 @@ After deploying, verify with:
 - `assets/*` is cached for one year and is safe because URLs carry `?v=__BUILD_ID__`.
 - HTML is revalidated on every request.
 - The game sets no cookies, makes no network requests after load, and stores only bankroll, bet, sound and stats in `localStorage`.
+- GitHub Pages serves `_headers` as a plain file rather than applying it. That deployment relies on the same-origin-only, no-inline-script design and `<meta name="referrer">` instead of response headers.
 
 ## Accessibility
 
