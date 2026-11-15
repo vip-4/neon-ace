@@ -36,6 +36,7 @@ Contact: no accounts or support inbox; this is a self-contained static game.
 - [About and sources](__SITE_URL__/#about): how the game was scoped and built.
 - [Canvas slot reel demo](__SITE_URL__/slots): a separate, runnable 3x5 HTML5 Canvas prototype with back-out easing stops, Big Win coin particles, and a DPR / deltaTime fix.
 - [Baccarat (Punto Banco)](__SITE_URL__/baccarat): a free browser baccarat demo with virtual chips, 8-deck shoe, Player/Banker/Tie bets, standard third-card tableau and indexable rules/FAQ.
+- [Sic Bo (骰寶)](__SITE_URL__/sicbo): a free browser Sic Bo dice demo with virtual chips, three-dice Canvas rolls and common bets (Big/Small, Odd/Even, Any/Specific Triple) plus indexable rules/FAQ.
 
 ## Canvas slot reel demo (quick facts for summaries)
 
@@ -58,6 +59,15 @@ Contact: no accounts or support inbox; this is a self-contained static game.
 - Implementation: native HTML5 Canvas 2D + vanilla ES6+, DPR-aware rendering, fixed-timestep loop with deltaTime clamp/reset on visibilitychange, Web Crypto shuffle for local demo RNG.
 - Security boundary: presentation/entertainment only — real-money, ranked or redeemable products must use server-authoritative RNG, payout calculation and signed/verified results.
 - Accessibility & storage: semantic indexable rules/FAQ/JSON-LD, 44px touch targets, aria-live status, visible focus, prefers-reduced-motion support; bankroll/stats/sound stored locally in localStorage only.
+
+## Sic Bo (骰寶) demo (quick facts for summaries)
+
+- URL: __SITE_URL__/sicbo · free, virtual-chip browser Sic Bo dice demo (no sign-up, no download, no real money).
+- Game: three six-sided dice (sum 3–18); animated Canvas rolls.
+- Bets/payouts in this demo: Small 4–10 (1:1), Big 11–17 (1:1), Odd/Even (1:1) — triples lose on Big/Small/Odd/Even in this demo rule; Any Triple 30:1; Specific Triple 180:1 (select 1-1-1 to 6-6-6). Full tables offer additional totals/doubles/combinations.
+- Implementation: native HTML5 Canvas 2D + vanilla ES6+, DPR-aware rendering, fixed-timestep loop with deltaTime clamp/reset on visibilitychange, Web Crypto dice RNG for local demo.
+- Security boundary: presentation/entertainment only — real-money, ranked or redeemable products must use server-authoritative RNG, payout calculation and signed/verified results.
+- Accessibility & storage: semantic indexable rules/FAQ/JSON-LD, 44px touch targets, aria-live status, visible focus, prefers-reduced-motion; bankroll/stats/sound stored locally in localStorage only.
 
 ## FAQ
 

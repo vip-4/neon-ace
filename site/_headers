@@ -21,6 +21,12 @@
 /baccarat.html
   Cache-Control: public, max-age=0, must-revalidate
 
+/sicbo
+  Cache-Control: public, max-age=0, must-revalidate
+
+/sicbo.html
+  Cache-Control: public, max-age=0, must-revalidate
+
 /slots
   Cache-Control: public, max-age=0, must-revalidate
 

@@ -42,6 +42,17 @@ Canvas content is invisible to crawlers, so the page carries complete meta tags,
 
 The page ships complete SEO/GEO (title/description/keywords/OG/Twitter/canonical/robots/sitemap), semantic/indexable rules, third-card chart and FAQ, plus JSON-LD (WebSite/WebPage/VideoGame/HowTo/FAQPage/BreadcrumbList), and is linked from site navigation, `sitemap.xml` and `llms.txt`.
 
+## Sic Bo (骰寶) demo
+
+`site/sicbo.html` is a lightweight, indexable **browser Sic Bo dice game** with virtual chips and Canvas-rendered three-dice rolls (`assets/sicbo.js`, `assets/sicbo-demo.css`):
+
+- **Bets/payouts (demo)** — Small 4–10 (1:1), Big 11–17 (1:1), Odd/Even (1:1) with triples losing on these bets in this demo rule; Any Triple (30:1); Specific Triple (180:1, selectable 1-1-1 to 6-6-6). Full casino tables include additional totals/doubles/combinations.
+- **Rendering & loop** — native HTML5 Canvas 2D, DPR-aware resize (`devicePixelRatio` capped), fixed-timestep `requestAnimationFrame` loop with clamped `deltaTime` and `visibilitychange` reset, animated roll presentation.
+- **State & UX** — finite-state flow (betting → rolling → reveal/settle), virtual bankroll/stats/sound in `localStorage`, touch-sized controls, `aria-live` status, visible focus and `prefers-reduced-motion` support.
+- **Security boundary** — local Web Crypto dice RNG for entertainment only; real-money/ranked/redeemable products must use server-authoritative RNG, payouts and signed results.
+
+The page ships complete SEO/GEO (title/description/keywords/OG/Twitter/canonical/robots/sitemap), semantic/indexable rules, payout table and FAQ, plus JSON-LD (WebSite/WebPage/VideoGame/HowTo/FAQPage/BreadcrumbList), and is linked from site navigation, `sitemap.xml` and `llms.txt`.
+
 ## Project structure
 
 ```
@@ -50,14 +61,17 @@ The page ships complete SEO/GEO (title/description/keywords/OG/Twitter/canonical
 │   ├── index.html              # game, rules, strategy, FAQ, JSON-LD
 │   ├── slots.html              # Canvas slot reel demo + SEO/GEO technical article
 │   ├── baccarat.html           # Baccarat (Punto Banco) demo + SEO/GEO rules/FAQ
+│   ├── sicbo.html              # Sic Bo dice demo + SEO/GEO rules/FAQ
 │   ├── 404.html
 │   ├── assets/
 │   │   ├── app.js              # game engine and render layer
 │   │   ├── slot-machine.js     # Canvas slot reels, Big Win FX, DPR/deltaTime
 │   │   ├── baccarat.js         # Baccarat FSM, third-card rules, Canvas render
+│   │   ├── sicbo.js            # Sic Bo FSM, dice RNG, Canvas render
 │   │   ├── styles.css          # design system and responsive layout
 │   │   ├── slot-demo.css       # standalone demo page styles
 │   │   ├── baccarat-demo.css   # baccarat demo page styles
+│   │   ├── sicbo-demo.css      # sic bo demo page styles
 │   │   ├── favicon.svg
 │   │   ├── og-cover.png
 │   │   ├── icon-192.png
