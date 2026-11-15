@@ -148,6 +148,8 @@ When deploying through the Direct Upload REST API rather than Wrangler, the foll
 
 Production verification: all asset routes return 200, missing paths return the custom `404.html`, Brotli compression is active, the strict CSP/security headers are applied, cache-busted assets are immutable, and W3C Nu HTML validation reports 0 messages. Cloudflare automatically adds `X-Robots-Tag: noindex` to versioned deployment URLs and redirects HTTP to HTTPS.
 
+Both production endpoints are built from the same final source. Rebuild with each platform's `-SiteUrl` (plus `-BasePath` for GitHub Pages project sites) before redeploying: Cloudflare Pages and GitHub Pages must not share a built `dist/` directory.
+
 ### Netlify
 
 1. Set the publish directory to `dist` (already configured in `netlify.toml`).
