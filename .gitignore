@@ -4,6 +4,7 @@
 # Derived deployment variants (rebuildable with the scripts in scripts/).
 dist-tg/
 dist-github/
+dist-firebase/
 
 # OS and editor noise
 .DS_Store

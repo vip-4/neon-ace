@@ -225,25 +225,26 @@ Open `@VIP865bot` in Telegram and tap the **Play Neon Ace** menu button.
 
 ### Firebase Hosting
 
-`firebase.json` configures Firebase Hosting to serve `dist/` with the same strict security headers, immutable asset caching, clean URLs and automatic `404.html` handling as the other hosts. `dist/` is generated, not committed, so build before deploying:
+**Live:** <https://neon-ace.web.app/> — a dedicated Hosting site `neon-ace` inside the existing Firebase project `boto3-firebase-1101012838`. A separate site was created so the project's default site and its other 20+ sites are untouched.
+
+`firebase.json` configures Hosting to serve `dist/` with the same strict security headers, immutable asset caching, clean URLs and automatic `404.html` handling as the other hosts. Rebuild for this origin before deploying:
 
 ```powershell
-powershell -NoProfile -ExecutionPolicy Bypass -File scripts/build.ps1 -SiteUrl https://YOUR-PROJECT.web.app
+powershell -NoProfile -ExecutionPolicy Bypass -File scripts/build.ps1 -SiteUrl https://neon-ace.web.app
+firebase deploy --only hosting --project boto3-firebase-1101012838
 ```
 
-Then deploy:
+The production deployment was done with the **Firebase Hosting REST API** (no Node/firebase-tools needed), using `-OutDir dist-firebase` so the Cloudflare artifact stays intact: `versions.create` -> `versions.populateFiles` (SHA256 of gzipped bytes) -> byte-exact upload -> `versions.patch` (`FINALIZED`) -> `releases.create`. Release `1794761220780000`, version `sites/neon-ace/versions/0f4f68611bb31adf`.
+
+Authentication used the Google Cloud SDK 593.0.0 installed at `%LOCALAPPDATA%\GoogleCloudSDK\google-cloud-sdk`:
 
 ```powershell
-firebase deploy --only hosting --project YOUR-PROJECT-ID
+gcloud auth application-default login --scopes=https://www.googleapis.com/auth/webmasters,https://www.googleapis.com/auth/cloud-platform
 ```
 
-Prerequisites that must be completed by a human (they cannot be automated from this environment):
+This is an interactive browser OAuth flow and must be completed by a human. ADC is stored at `%APPDATA%\gcloud\application_default_credentials.json`; the quota project was set with `gcloud auth application-default set-quota-project boto3-firebase-1101012838` and the `X-Goog-User-Project` header is required for Search Console calls.
 
-1. **Google authentication** — `gcloud auth application-default login --scopes=https://www.googleapis.com/auth/webmasters,https://www.googleapis.com/auth/cloud-platform` is an interactive browser OAuth flow. The Google Cloud SDK is installed at `%LOCALAPPDATA%\GoogleCloudSDK\google-cloud-sdk`. Alternatively set `GOOGLE_APPLICATION_CREDENTIALS` to a service-account key.
-2. **A GCP project with Firebase enabled** — create/select a project, enable Firebase Hosting and obtain its `PROJECT_ID`. Project creation requires a billing account and a `gcloud auth login` (ADC credentials alone are not a gcloud CLI account).
-3. **firebase-tools** — the Firebase CLI requires Node.js/npm, which is not installed here (`npm i -g firebase-tools` after installing Node).
-
-The `webmasters` scope is intended for Google Search Console API calls (sitemap submission / ownership verification); it does not grant hosting deploy rights on its own.
+> **Search Console:** the `webmasters` scope allowed registering `https://neon-ace.web.app/` (currently `siteUnverifiedUser`), but sitemap submission requires ownership verification. Obtaining an HTML verification token needs the separate `siteverification` scope (not granted) or a DNS TXT record. Add `<meta name="google-site-verification" content="...">` to `site/index.html`, rebuild, redeploy and verify in Search Console, then submit `https://neon-ace.web.app/sitemap.xml`.
 
 ### Source mirrors
 
