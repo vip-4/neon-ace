@@ -1,0 +1,13 @@
+# Generated output is intentionally not ignored: dist/ is the deployable
+# artifact for static hosts that do not run a build step.
+
+# OS and editor noise
+.DS_Store
+Thumbs.db
+desktop.ini
+*.swp
+*~
+
+# Logs and local previews
+*.log
+preview/
