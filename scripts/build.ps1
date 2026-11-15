@@ -161,6 +161,12 @@ function Test-DocumentLinks([string]$docPath, [string]$docHtml) {
         if (Test-Path -LiteralPath $candidate -PathType Container) {
             $candidate = Join-Path $candidate 'index.html'
         }
+        # Clean URLs: Cloudflare Pages / Firebase Hosting serve /slots from slots.html,
+        # so an extensionless link is valid if the matching .html file exists.
+        if (-not (Test-Path -LiteralPath $candidate -PathType Leaf) -and
+            (Test-Path -LiteralPath ($candidate + '.html') -PathType Leaf)) {
+            $candidate = $candidate + '.html'
+        }
         if (-not (Test-Path -LiteralPath $candidate -PathType Leaf)) {
             Add-BuildError "Broken link in ${docName}: $raw"
         }
