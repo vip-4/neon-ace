@@ -214,9 +214,10 @@ Write-Utf8Text (Join-Path $distRoot '.nojekyll') ''
 # Validate output ----------------------------------------------------------
 
 $requiredFiles = @(
-    'index.html', '404.html', 'robots.txt', 'sitemap.xml', 'llms.txt',
+    'index.html', 'slots.html', '404.html', 'robots.txt', 'sitemap.xml', 'llms.txt',
     'manifest.webmanifest', '_headers', '.nojekyll',
     'assets/styles.css', 'assets/app.js', 'assets/favicon.svg',
+    'assets/slot-machine.js', 'assets/slot-demo.css',
     'assets/og-cover.png', 'assets/icon-512.png', 'assets/icon-192.png',
     'assets/apple-touch-icon.png'
 )
@@ -305,6 +306,10 @@ else {
 }
 
 Test-DocumentLinks $indexPath $html
+$slotsPath = Join-Path $distRoot 'slots.html'
+if (Test-Path -LiteralPath $slotsPath -PathType Leaf) {
+    Test-DocumentLinks $slotsPath (Read-Utf8Text $slotsPath)
+}
 $errorPath = Join-Path $distRoot '404.html'
 if (Test-Path -LiteralPath $errorPath -PathType Leaf) {
     Test-DocumentLinks $errorPath (Read-Utf8Text $errorPath)

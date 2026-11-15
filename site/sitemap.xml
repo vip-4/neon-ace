@@ -11,4 +11,14 @@
       <image:title>Neon Ace — free blackjack in the browser</image:title>
     </image:image>
   </url>
+  <url>
+    <loc>__SITE_URL__/slots.html</loc>
+    <lastmod>__BUILD_DATE__</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>__SITE_URL__/assets/og-cover.png</image:loc>
+      <image:title>Neon Ace 3x5 Canvas slot reel demo</image:title>
+    </image:image>
+  </url>
 </urlset>

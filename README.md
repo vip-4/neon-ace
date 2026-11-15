@@ -19,16 +19,31 @@ A production-ready, single-page blackjack game built with plain HTML, CSS and Ja
 - Production headers with a strict Content Security Policy and immutable asset caching.
 - Build-time validation of metadata, structured data, internal links, sitemap, manifest, icon dimensions and CSP.
 
+## Canvas slot reel demo
+
+`site/slots.html` is a separate, indexable technical page hosting a runnable **3×5 HTML5 Canvas slot machine** prototype written in vanilla JS (`assets/slot-machine.js`):
+
+- **Reels** — cubic ease-in acceleration to 19 symbols/s, constant-speed scroll, then sequential stops 0.17 s apart using `easeOutBack` (overshoot + settle = the mechanical latch feel). Eight symbols are rasterised once into an offscreen sprite atlas.
+- **Big Win** — full-screen dim, three parabolic coin-burst waves (gravity 1500 px/s²), `easeOutCubic` count-up number, and a Web Audio arpeggio unlocked on first gesture.
+- **DPR / deltaTime** — backing store scaled by `devicePixelRatio` (capped at 2.5) with `setTransform(dpr*scale, …)`, a single clamped `requestAnimationFrame` loop (`dt ≤ 0.05 s`), fixed 1/120 s physics steps, and a reset of the time base on `visibilitychange` to kill the tab-restore jump.
+- **Performance** — 200-slot coin object pool (zero allocations in the loop), `setTransform` instead of per-particle `save/restore`, `IntersectionObserver` skips offscreen drawing, and `offset` is normalised on settle to avoid float drift.
+- **Security boundary** — the client never computes RNG or payout. `DemoOutcomeProvider` replays a fixed script of outcomes; the commented `ServerOutcomeProvider` shows the production `POST /api/spin` shape with a signed result.
+
+Canvas content is invisible to crawlers, so the page carries complete meta tags, a JSON-LD graph (WebPage / VideoGame / HowTo / FAQPage / BreadcrumbList) and a long-form semantic explanation of all three features. It is linked from the homepage nav, `sitemap.xml` and `llms.txt`.
+
 ## Project structure
 
 ```
 .
 ├── site/                       # source, deployable as-is if placeholders are acceptable
 │   ├── index.html              # game, rules, strategy, FAQ, JSON-LD
+│   ├── slots.html              # Canvas slot reel demo + SEO/GEO technical article
 │   ├── 404.html
 │   ├── assets/
 │   │   ├── app.js              # game engine and render layer
+│   │   ├── slot-machine.js     # Canvas slot reels, Big Win FX, DPR/deltaTime
 │   │   ├── styles.css          # design system and responsive layout
+│   │   ├── slot-demo.css       # standalone demo page styles
 │   │   ├── favicon.svg
 │   │   ├── og-cover.png
 │   │   ├── icon-192.png
