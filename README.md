@@ -2,7 +2,7 @@
 
 A production-ready, single-page blackjack game built with plain HTML, CSS and JavaScript. No frameworks, no build tooling, no remote fonts, no analytics and no real-money wagering. The critical path is roughly **29 KB gzipped**.
 
-**Live production sites:** <https://neon-ace.pages.dev/> (Cloudflare Pages) and <https://vip-4.github.io/neon-ace/> (GitHub Pages).
+**Live production sites:** <https://neon-ace.pages.dev/> (Cloudflare Pages), <https://vip-4.github.io/neon-ace/> (GitHub Pages) and <https://neon-ace-tg.pages.dev/> (Telegram Mini App endpoint).
 
 ---
 
@@ -192,6 +192,37 @@ The live site is the public repository `vip-4/neon-ace`, deployed by the **Deplo
 
 > **Project-site limits:** `robots.txt`, `sitemap.xml` and `llms.txt` live at `/neon-ace/` rather than the host root; the root-level files belong to the existing `vip-4.github.io` user site. GitHub Pages cannot send custom response headers, so `_headers` is served as a plain file there instead of being applied. Use Cloudflare Pages, Netlify, Vercel or a proxied custom domain when you need the strict CSP and security headers.
 
+### Telegram Mini App
+
+The game is also published as a Telegram Mini App. A dedicated endpoint is used because Telegram Web renders Mini Apps inside an `https://web.telegram.org` iframe, which the main sites' `X-Frame-Options: SAMEORIGIN` and `frame-ancestors 'self'` would block.
+
+| Setting | Value |
+| --- | --- |
+| Mini App endpoint | <https://neon-ace-tg.pages.dev/> |
+| Bot | `@VIP865bot` |
+| Menu button | `Play Neon Ace` (default, applies to all users) |
+| Cloudflare Pages project | `neon-ace-tg` |
+| Build script | `scripts/build-telegram.ps1` -> `dist-tg/` |
+| Canonical | `https://neon-ace.pages.dev/` (SEO signals stay on the main site) |
+
+Build and deploy with:
+
+```powershell
+powershell -NoProfile -ExecutionPolicy Bypass -File scripts/build-telegram.ps1
+```
+
+Then upload `dist-tg/` to the `neon-ace-tg` Pages project with Direct Upload (see [Current production deployment](#current-production-deployment)). The variant adds:
+
+- `https://telegram.org/js/telegram-web-app.js` (deferred) plus a same-origin, build-versioned `assets/telegram.js` bridge that calls `ready()`, `expand()` and matches Telegram's header/background colors on supported clients.
+- Headers that allow framing (`frame-ancestors *`), permit the Telegram script (`script-src ... https://telegram.org`), omit `X-Frame-Options`/COOP, and send `X-Robots-Tag: noindex` so the duplicate endpoint is not indexed.
+- The same HTML, CSS, game engine, JSON-LD, canonical URL, metadata and accessibility features as the main build.
+
+The bot is configured through the Bot API: `setChatMenuButton` with a `MenuButtonWebApp` object (omit `chat_id` to set the default button for all users). **No bot token is stored in this repository**; rotate any token that has been exposed in a chat. `@VIP863Bot` and `@VIP860Bot` were left unconfigured and can be pointed at the same URL with one `setChatMenuButton` call.
+
+> **BotFather-only features:** a Main Mini App with a profile **Launch app** button and direct links such as `https://t.me/VIP865bot?startapp` must be enabled manually with @BotFather (`/mybots > Bot Settings > Configure Mini App`, or `/newapp`). These cannot be set through the Bot API.
+
+Open `@VIP865bot` in Telegram and tap the **Play Neon Ace** menu button.
+
 ### Any static host
 
 Upload the contents of `dist/` to the web root. Serve `index.html` at `/`, use `404.html` for missing paths, and enable gzip or Brotli. If the host does not read `_headers`, translate the rules in that file into the host's header configuration.
@@ -222,6 +253,7 @@ After deploying, verify with:
 - HTML is revalidated on every request.
 - The game sets no cookies, makes no network requests after load, and stores only bankroll, bet, sound and stats in `localStorage`.
 - GitHub Pages serves `_headers` as a plain file rather than applying it. That deployment relies on the same-origin-only, no-inline-script design and `<meta name="referrer">` instead of response headers.
+- The Telegram Mini App endpoint is the deliberate exception: it allows framing, loads `telegram.org/js/telegram-web-app.js` and is `noindex`. The two public web endpoints keep their strict, non-embeddable headers.
 
 ## Accessibility
 

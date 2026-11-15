@@ -1,6 +1,10 @@
 # Generated output is intentionally not ignored: dist/ is the deployable
 # artifact for static hosts that do not run a build step.
 
+# Derived deployment variants (rebuildable with the scripts in scripts/).
+dist-tg/
+dist-github/
+
 # OS and editor noise
 .DS_Store
 Thumbs.db
