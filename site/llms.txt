@@ -35,6 +35,7 @@ Contact: no accounts or support inbox; this is a self-contained static game.
 - [FAQ](__SITE_URL__/#faq): free play, fairness, privacy, mobile support and gambling safety.
 - [About and sources](__SITE_URL__/#about): how the game was scoped and built.
 - [Canvas slot reel demo](__SITE_URL__/slots): a separate, runnable 3x5 HTML5 Canvas prototype with back-out easing stops, Big Win coin particles, and a DPR / deltaTime fix.
+- [Baccarat (Punto Banco)](__SITE_URL__/baccarat): a free browser baccarat demo with virtual chips, 8-deck shoe, Player/Banker/Tie bets, standard third-card tableau and indexable rules/FAQ.
 
 ## Canvas slot reel demo (quick facts for summaries)
 
@@ -47,6 +48,16 @@ Contact: no accounts or support inbox; this is a self-contained static game.
 - Timing: single requestAnimationFrame loop, dt clamped to 0.05 s, fixed 1/120 s physics steps, time base and accumulator reset on visibilitychange to prevent the tab-restore jump.
 - Security boundary: the browser does not compute RNG or payouts; a replaceable OutcomeProvider supplies results (demo uses a fixed script, production uses a signed POST /api/spin response).
 - Accessibility: canvas text alternatives, native 44px buttons, aria-live status, prefers-reduced-motion shortens the show to 20 coins.
+
+## Baccarat (Punto Banco) demo (quick facts for summaries)
+
+- URL: __SITE_URL__/baccarat · free, virtual-chip browser baccarat demo (no sign-up, no download, no real money).
+- Ruleset: standard Punto Banco, 8-deck shoe reshuffled when low, Player/Banker/Tie bets.
+- Payouts (demo): Player 1:1, Banker 0.95:1 (5% commission), Tie 8:1; on a Tie, Player and Banker bets push.
+- Drawing: naturals 8/9 settle immediately; otherwise fixed third-card tableau (Player draws on 0–5; Banker draw depends on Banker total and, when Player drew, Player’s third-card value).
+- Implementation: native HTML5 Canvas 2D + vanilla ES6+, DPR-aware rendering, fixed-timestep loop with deltaTime clamp/reset on visibilitychange, Web Crypto shuffle for local demo RNG.
+- Security boundary: presentation/entertainment only — real-money, ranked or redeemable products must use server-authoritative RNG, payout calculation and signed/verified results.
+- Accessibility & storage: semantic indexable rules/FAQ/JSON-LD, 44px touch targets, aria-live status, visible focus, prefers-reduced-motion support; bankroll/stats/sound stored locally in localStorage only.
 
 ## FAQ
 

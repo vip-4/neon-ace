@@ -31,6 +31,17 @@ A production-ready, single-page blackjack game built with plain HTML, CSS and Ja
 
 Canvas content is invisible to crawlers, so the page carries complete meta tags, a JSON-LD graph (WebPage / VideoGame / HowTo / FAQPage / BreadcrumbList) and a long-form semantic explanation of all three features. It is linked from the homepage nav, `sitemap.xml` and `llms.txt`.
 
+## Baccarat (Punto Banco) demo
+
+`site/baccarat.html` is a lightweight, indexable **browser baccarat (Punto Banco)** page with virtual chips and Canvas-rendered hands (`assets/baccarat.js`, `assets/baccarat-demo.css`):
+
+- **Ruleset** — 8-deck shoe, Player/Banker/Tie bets, naturals 8/9, standard third-card tableau applied automatically, payouts 1:1 (Player), 0.95:1 after 5% commission (Banker), 8:1 Tie (demo); Player/Banker push on Tie.
+- **Rendering & loop** — native HTML5 Canvas 2D, DPR-aware resize (`devicePixelRatio` capped), fixed-timestep `requestAnimationFrame` loop with clamped `deltaTime` and `visibilitychange` reset to avoid tab-return jumps.
+- **State & UX** — finite-state flow (betting → dealing/draw → reveal/settle), virtual bankroll/stats/sound in `localStorage`, touch-sized controls, `aria-live` status, visible focus and `prefers-reduced-motion` support.
+- **Security boundary** — local Web Crypto shuffle for entertainment only; real-money/ranked/redeemable products must use server-authoritative RNG, payouts and signed results (client renders verified outcomes only).
+
+The page ships complete SEO/GEO (title/description/keywords/OG/Twitter/canonical/robots/sitemap), semantic/indexable rules, third-card chart and FAQ, plus JSON-LD (WebSite/WebPage/VideoGame/HowTo/FAQPage/BreadcrumbList), and is linked from site navigation, `sitemap.xml` and `llms.txt`.
+
 ## Project structure
 
 ```
@@ -38,12 +49,15 @@ Canvas content is invisible to crawlers, so the page carries complete meta tags,
 ├── site/                       # source, deployable as-is if placeholders are acceptable
 │   ├── index.html              # game, rules, strategy, FAQ, JSON-LD
 │   ├── slots.html              # Canvas slot reel demo + SEO/GEO technical article
+│   ├── baccarat.html           # Baccarat (Punto Banco) demo + SEO/GEO rules/FAQ
 │   ├── 404.html
 │   ├── assets/
 │   │   ├── app.js              # game engine and render layer
 │   │   ├── slot-machine.js     # Canvas slot reels, Big Win FX, DPR/deltaTime
+│   │   ├── baccarat.js         # Baccarat FSM, third-card rules, Canvas render
 │   │   ├── styles.css          # design system and responsive layout
 │   │   ├── slot-demo.css       # standalone demo page styles
+│   │   ├── baccarat-demo.css   # baccarat demo page styles
 │   │   ├── favicon.svg
 │   │   ├── og-cover.png
 │   │   ├── icon-192.png
