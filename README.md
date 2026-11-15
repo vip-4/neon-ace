@@ -246,9 +246,31 @@ This is an interactive browser OAuth flow and must be completed by a human. ADC 
 
 > **Search Console:** the `webmasters` scope allowed registering `https://neon-ace.web.app/` (currently `siteUnverifiedUser`), but sitemap submission requires ownership verification. Obtaining an HTML verification token needs the separate `siteverification` scope (not granted) or a DNS TXT record. Add `<meta name="google-site-verification" content="...">` to `site/index.html`, rebuild, redeploy and verify in Search Console, then submit `https://neon-ace.web.app/sitemap.xml`.
 
+### Flutter Web + Firebase AI Logic
+
+**Live:** <https://neon-ace-flutter.web.app/> — a standalone Flutter Web project (`flutter_app/`) deployed to its own Hosting site `neon-ace-flutter` in the existing Firebase project. It does not touch any other site in that project.
+
+Built with **Flutter SDK 3.50.0 / Dart 3.14.0** (installed at `%LOCALAPPDATA%\FlutterSDK\flutter`):
+
+```powershell
+cd flutter_app
+flutter pub get
+flutter build web --release --no-web-resources-cdn
+```
+
+`--no-web-resources-cdn` keeps CanvasKit/WASM on the same origin, which is required for the CSP and avoids a third-party runtime dependency. Deployment again used the Firebase Hosting REST API from `build/web/`; release `1794764043946000`, version `sites/neon-ace-flutter/versions/1481d819a78d19f1`.
+
+The app is a small playable blackjack game with an optional **"Ask Firebase AI for a rule refresher"** button built with `firebase_ai` (`FirebaseAI.googleAI().generativeModel(...)`), initialized with the Firebase Web app `neon-ai-flutter`. `lib/firebase_options.dart` holds Firebase Web client identifiers, which are public by design but should still be restricted to the project's domains in the Firebase console.
+
+> **Firebase AI Logic requires billing on the GCP project.** The `generativelanguage` / `firebasevertexai` APIs are enabled, but calls return `403 This API method requires billing to be enabled` until a billing account is attached. The in-app AI button therefore degrades gracefully to a built-in rules hint; the game is fully playable without it.
+
+SEO / GEO for a client-rendered app: `flutter_app/web/index.html` carries complete meta tags (title, description, keywords, canonical, 11 Open Graph and 6 Twitter Card tags), a JSON-LD graph, and a semantic `<noscript>` fallback so raw-HTML crawlers and generative answer engines can still index and cite the page. `robots.txt`, `sitemap.xml`, `llms.txt`, `manifest.json` and a custom `404.html` are deployed alongside. Flutter Web is client-rendered, so the **canonical, fully indexable** edition with the complete rules, basic-strategy guide and FAQ remains the static site at <https://neon-ace.web.app/>.
+
+CSP note: FlutterFire Web injects a runtime inline bootstrap script, so this one site allows `'unsafe-inline'` and `'wasm-unsafe-eval'` in `script-src` (plus `www.gstatic.com`). The four static/Telegram endpoints keep their stricter, non-embeddable CSP.
+
 ### Source mirrors
 
-The full source — `site/`, `scripts/`, hosting configs and the CI workflow — is mirrored to three public repositories:
+The full source — `site/`, `scripts/`, `flutter_app/`, hosting configs and the CI workflow — is mirrored to three public repositories:
 
 | Platform | Repository |
 | --- | --- |
