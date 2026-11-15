@@ -223,6 +223,18 @@ The bot is configured through the Bot API: `setChatMenuButton` with a `MenuButto
 
 Open `@VIP865bot` in Telegram and tap the **Play Neon Ace** menu button.
 
+### Source mirrors
+
+The full source — `site/`, `scripts/`, hosting configs and the CI workflow — is mirrored to three public repositories:
+
+| Platform | Repository |
+| --- | --- |
+| GitHub | <https://github.com/vip-4/neon-ace> |
+| Gitee | <https://gitee.com/vip882/neon-ace> |
+| AtomGit | <https://atomgit.com/zzw1208/neon-ace> |
+
+All three contain the same source files. Generated artifacts (`dist/`, `dist-github/`, `dist-tg/`) are excluded; regenerate them with `scripts/build.ps1` or `scripts/build-telegram.ps1` before deploying. Static production hosting is provided by Cloudflare Pages, GitHub Pages and the Telegram Mini App endpoint described above — Gitee and AtomGit are source mirrors only.
+
 ### Any static host
 
 Upload the contents of `dist/` to the web root. Serve `index.html` at `/`, use `404.html` for missing paths, and enable gzip or Brotli. If the host does not read `_headers`, translate the rules in that file into the host's header configuration.
